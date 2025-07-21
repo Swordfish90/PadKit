@@ -17,10 +17,11 @@
 package gg.jam.jampadcompose.anchors
 
 import androidx.compose.ui.geometry.Offset
+import kotlinx.collections.immutable.PersistentSet
 
 data class Anchor<T>(
     val position: Offset,
-    val buttons: Set<T>,
+    val buttons: PersistentSet<T>,
     val size: Float,
 ) {
     fun distance(point: Offset): Float {

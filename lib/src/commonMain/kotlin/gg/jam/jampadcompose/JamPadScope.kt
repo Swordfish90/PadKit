@@ -109,6 +109,9 @@ class JamPadScope {
                                 it.position.relativeToCenter(handler.rect),
                             )
                         }
+                        .filter {
+                            it.position.getDistanceSquared() <= 1f || it.pointerId == handler.startDragGesture?.pointerId
+                        }
 
                 val (updatedState, startDragGesture) =
                     pointerHandler.handle(

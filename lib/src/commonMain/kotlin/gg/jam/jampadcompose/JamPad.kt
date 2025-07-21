@@ -23,6 +23,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.pointer.pointerInput
@@ -36,11 +37,7 @@ import gg.jam.jampadcompose.ids.ControlId
 import gg.jam.jampadcompose.inputevents.InputEvent
 import gg.jam.jampadcompose.inputevents.InputEventsGenerator
 import gg.jam.jampadcompose.inputstate.InputState
-import gg.jam.jampadcompose.utils.AsyncLaunchedEffect
-import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 
-@OptIn(ExperimentalCoroutinesApi::class, DelicateCoroutinesApi::class)
 @Composable
 fun JamPad(
     modifier: Modifier = Modifier,
@@ -99,21 +96,12 @@ fun JamPad(
         scope.content()
     }
 
-    val inputState = scope.inputState.value
-
-    if (onInputStateUpdated != null) {
-        LaunchedEffect(inputState) {
-            onInputStateUpdated.invoke(inputState)
-        }
-    }
-
-    if (onInputEvents != null) {
-        LaunchedEffect(inputState) {
-            onInputEvents(inputEventsGenerator.onInputStateChanged(inputState))
-        }
-    }
-
-    AsyncLaunchedEffect("Haptics", inputState) {
-        inputHapticGenerator.onInputStateChanged(inputState)
+    LaunchedEffect(scope.inputState) {
+        snapshotFlow { scope.inputState.value }
+            .collect { inputState ->
+                onInputStateUpdated?.invoke(inputState)
+                onInputEvents?.invoke(inputEventsGenerator.onInputStateChanged(inputState))
+                inputHapticGenerator.onInputStateChanged(inputState)
+            }
     }
 }

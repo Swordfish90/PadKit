@@ -21,6 +21,7 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.State
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -32,22 +33,26 @@ import gg.jam.jampadcompose.anchors.rememberCompositeAnchors
 import gg.jam.jampadcompose.anchors.rememberPrimaryAnchors
 import gg.jam.jampadcompose.handlers.FaceButtonsPointerHandler
 import gg.jam.jampadcompose.ids.KeyId
+import gg.jam.jampadcompose.inputstate.InputState
 import gg.jam.jampadcompose.layouts.anchors.ButtonAnchorsLayout
 import gg.jam.jampadcompose.ui.DefaultButtonForeground
 import gg.jam.jampadcompose.ui.DefaultCompositeForeground
 import gg.jam.jampadcompose.ui.DefaultControlBackground
+import kotlinx.collections.immutable.PersistentList
+import kotlinx.collections.immutable.PersistentSet
+import kotlinx.collections.immutable.persistentListOf
 
 @Composable
 fun JamPadScope.ControlFaceButtons(
     modifier: Modifier = Modifier,
     rotationInDegrees: Float = 0f,
-    ids: List<KeyId>,
+    ids: PersistentList<KeyId>,
     includeComposite: Boolean = true,
     background: @Composable () -> Unit = { DefaultControlBackground() },
-    foreground: @Composable (KeyId, Boolean) -> Unit = { _, pressed ->
-        DefaultButtonForeground(pressed = pressed)
+    foreground: @Composable (KeyId, State<Boolean>) -> Unit = { _, pressed ->
+        DefaultButtonForeground(pressedState = pressed)
     },
-    foregroundComposite: @Composable (Boolean) -> Unit = { pressed ->
+    foregroundComposite: @Composable (State<Boolean>) -> Unit = { pressed ->
         DefaultCompositeForeground(pressed = pressed)
     },
 ) {
@@ -56,7 +61,7 @@ fun JamPadScope.ControlFaceButtons(
         if (includeComposite) {
             rememberCompositeAnchors(ids, rotationInDegrees)
         } else {
-            emptyList()
+            persistentListOf()
         }
 
     ControlFaceButtons(
@@ -72,13 +77,13 @@ fun JamPadScope.ControlFaceButtons(
 @Composable
 fun JamPadScope.ControlFaceButtons(
     modifier: Modifier = Modifier,
-    primaryAnchors: List<Anchor<KeyId>>,
-    compositeAnchors: List<Anchor<KeyId>>,
+    primaryAnchors: PersistentList<Anchor<KeyId>>,
+    compositeAnchors: PersistentList<Anchor<KeyId>>,
     background: @Composable () -> Unit = { DefaultControlBackground() },
-    foreground: @Composable (KeyId, Boolean) -> Unit = { _, pressed ->
-        DefaultButtonForeground(pressed = pressed)
+    foreground: @Composable (KeyId, State<Boolean>) -> Unit = { _, pressed ->
+        DefaultButtonForeground(pressedState = pressed)
     },
-    foregroundComposite: @Composable (Boolean) -> Unit = { pressed ->
+    foregroundComposite: @Composable (State<Boolean>) -> Unit = { pressed ->
         DefaultCompositeForeground(pressed = pressed)
     },
 ) {
@@ -106,11 +111,7 @@ fun JamPadScope.ControlFaceButtons(
             primaryAnchors
                 .flatMap { it.buttons }
                 .forEach {
-                    val keyState =
-                        remember {
-                            derivedStateOf { inputState.value.getDigitalKey(it) }
-                        }
-                    foreground(it, keyState.value)
+                    ButtonForeground(it, inputState, foreground)
                 }
         }
 
@@ -119,12 +120,32 @@ fun JamPadScope.ControlFaceButtons(
             anchors = compositeAnchors,
         ) {
             compositeAnchors.forEach { point ->
-                val compositeState =
-                    remember {
-                        derivedStateOf { point.buttons.all { inputState.value.getDigitalKey(it) } }
-                    }
-                foregroundComposite(compositeState.value)
+                CompositeForeground(point.buttons, inputState, foregroundComposite)
             }
         }
     }
+}
+
+@Composable
+private fun ButtonForeground(
+    keyId: KeyId,
+    inputState: State<InputState>,
+    content: @Composable (KeyId, State<Boolean>) -> Unit
+) {
+    val pressed = remember {
+        derivedStateOf { inputState.value.getDigitalKey(keyId) }
+    }
+    content(keyId, pressed)
+}
+
+@Composable
+private fun CompositeForeground(
+    keys: PersistentSet<KeyId>,
+    inputState: State<InputState>,
+    content: @Composable (State<Boolean>) -> Unit
+) {
+    val pressed = remember {
+        derivedStateOf { keys.all { inputState.value.getDigitalKey(it) } }
+    }
+    content(pressed)
 }

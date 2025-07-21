@@ -20,6 +20,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.State
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -35,8 +36,8 @@ import gg.jam.jampadcompose.ui.DefaultControlBackground
 fun JamPadScope.ControlButton(
     modifier: Modifier = Modifier,
     id: KeyId,
-    background: @Composable (Boolean) -> Unit = { DefaultControlBackground() },
-    foreground: @Composable (Boolean) -> Unit = { DefaultButtonForeground(pressed = it) },
+    background: @Composable (State<Boolean>) -> Unit = { DefaultControlBackground() },
+    foreground: @Composable (State<Boolean>) -> Unit = { DefaultButtonForeground(pressedState = it) },
 ) {
     val pressedState =
         remember {
@@ -57,8 +58,7 @@ fun JamPadScope.ControlButton(
                 .fillMaxSize()
                 .onGloballyPositioned { updateHandlerPosition(handler, it.boundsInRoot()) },
     ) {
-        val pressed = pressedState.value
-        background(pressed)
-        foreground(pressed)
+        background(pressedState)
+        foreground(pressedState)
     }
 }

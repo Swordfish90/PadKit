@@ -23,6 +23,9 @@ import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
@@ -31,57 +34,52 @@ import gg.jam.jampadcompose.anchors.rememberPrimaryAnchors
 import gg.jam.jampadcompose.handlers.CrossPointerHandler
 import gg.jam.jampadcompose.layouts.anchors.ButtonAnchorsLayout
 import gg.jam.jampadcompose.utils.ifUnspecified
+import kotlinx.collections.immutable.toPersistentList
 
 @Composable
 fun DefaultCrossForeground(
     modifier: Modifier = Modifier,
-    direction: Offset,
-    rightDial: @Composable (Boolean) -> Unit = {
+    directionState: State<Offset>,
+    rightDial: @Composable (State<Boolean>) -> Unit = {
         DefaultButtonForeground(
-            pressed = it,
+            pressedState = it,
             iconPainter = rememberVectorPainter(Icons.Default.KeyboardArrowRight),
         )
     },
-    bottomDial: @Composable (Boolean) -> Unit = {
+    bottomDial: @Composable (State<Boolean>) -> Unit = {
         DefaultButtonForeground(
-            pressed = it,
+            pressedState = it,
             iconPainter = rememberVectorPainter(Icons.Default.KeyboardArrowDown),
         )
     },
-    leftDial: @Composable (Boolean) -> Unit = {
+    leftDial: @Composable (State<Boolean>) -> Unit = {
         DefaultButtonForeground(
-            pressed = it,
+            pressedState = it,
             iconPainter = rememberVectorPainter(Icons.Default.KeyboardArrowLeft),
         )
     },
-    topDial: @Composable (Boolean) -> Unit = {
+    topDial: @Composable (State<Boolean>) -> Unit = {
         DefaultButtonForeground(
-            pressed = it,
+            pressedState = it,
             iconPainter = rememberVectorPainter(Icons.Default.KeyboardArrowUp),
         )
     },
-    foregroundComposite: @Composable (Boolean) -> Unit = { pressed ->
-        DefaultCompositeForeground(pressed = pressed)
+    foregroundComposite: @Composable (State<Boolean>) -> Unit = {
+        DefaultCompositeForeground(pressed = it)
     },
     allowDiagonals: Boolean = true,
 ) {
-    val adjustedDirection = direction.ifUnspecified { Offset.Zero }
-    val isTop = adjustedDirection.y > 0.5f
-    val isLeft = adjustedDirection.x < -0.5f
-    val isRight = adjustedDirection.x > 0.5f
-    val isBottom = adjustedDirection.y < -0.5f
-
-    val directions = CrossPointerHandler.Direction.entries
+    val directions = CrossPointerHandler.Direction.entries.toPersistentList()
     val primaryAnchors = rememberPrimaryAnchors(directions, 0f)
 
     ButtonAnchorsLayout(
         modifier = modifier.fillMaxSize(),
         anchors = primaryAnchors,
     ) {
-        rightDial(isRight)
-        bottomDial(isBottom)
-        leftDial(isLeft)
-        topDial(isTop)
+        DirectionalButton(directionState, { it.x > 0.5f }, rightDial)
+        DirectionalButton(directionState, { it.y < -0.5f }, bottomDial)
+        DirectionalButton(directionState, { it.x < -0.5f }, leftDial)
+        DirectionalButton(directionState, { it.y > 0.5f }, topDial)
     }
 
     val compositeAnchors = rememberCompositeAnchors(directions, 0f)
@@ -91,10 +89,23 @@ fun DefaultCrossForeground(
             modifier = modifier.fillMaxSize(),
             anchors = compositeAnchors,
         ) {
-            foregroundComposite(isBottom && isRight)
-            foregroundComposite(isBottom && isLeft)
-            foregroundComposite(isTop && isLeft)
-            foregroundComposite(isTop && isRight)
+            DirectionalButton(directionState, { it.y < -0.5f && it.x > 0.5f }, foregroundComposite)
+            DirectionalButton(directionState, { it.y < -0.5f && it.x < -0.5f }, foregroundComposite)
+            DirectionalButton(directionState, { it.y > 0.5f && it.x < -0.5f }, foregroundComposite)
+            DirectionalButton(directionState, { it.y > 0.5f && it.x > 0.5f }, foregroundComposite)
         }
     }
+}
+
+@Composable
+private fun DirectionalButton(
+    directionState: State<Offset>,
+    check: (Offset) -> Boolean,
+    content: @Composable (State<Boolean>) -> Unit,
+) {
+    val isPressed =
+        remember {
+            derivedStateOf { check(directionState.value.ifUnspecified { Offset.Zero }) }
+        }
+    content(isPressed)
 }

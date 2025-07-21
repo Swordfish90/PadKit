@@ -21,14 +21,17 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.geometry.Offset
 import gg.jam.jampadcompose.utils.Constants
 import gg.jam.jampadcompose.utils.GeometryUtils.toRadians
+import kotlinx.collections.immutable.PersistentList
+import kotlinx.collections.immutable.persistentSetOf
+import kotlinx.collections.immutable.toPersistentList
 import kotlin.math.cos
 import kotlin.math.sin
 
 @Composable
 fun <T> rememberCompositeAnchors(
-    ids: List<T>,
+    ids: PersistentList<T>,
     rotationInDegrees: Float,
-): List<Anchor<T>> {
+): PersistentList<Anchor<T>> {
     return remember(ids, rotationInDegrees) {
         val baseRotation = rotationInDegrees.toRadians()
 
@@ -42,11 +45,11 @@ fun <T> rememberCompositeAnchors(
                     val angle = (baseRotation + Constants.PI2 * (index + 0.5f) / ids.size)
                     Anchor(
                         Offset(cos(angle), sin(angle)) * radius,
-                        setOf(prev, next),
+                        persistentSetOf(prev, next),
                         0.1f,
                     )
                 }
 
-        compositeAnchors
+        compositeAnchors.toPersistentList()
     }
 }

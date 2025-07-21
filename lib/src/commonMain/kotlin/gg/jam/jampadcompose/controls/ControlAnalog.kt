@@ -23,6 +23,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.State
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -44,22 +45,12 @@ fun JamPadScope.ControlAnalog(
     modifier: Modifier = Modifier,
     id: ContinuousDirectionId,
     analogPressId: KeyId? = null,
+    foregroundSize: Float = 0.66f,
     background: @Composable () -> Unit = { DefaultControlBackground() },
-    foreground: @Composable (Boolean) -> Unit = {
-        DefaultButtonForeground(pressed = it, scale = 1f)
+    foreground: @Composable (State<Boolean>) -> Unit = {
+        DefaultButtonForeground(pressedState = it, scale = 1f)
     },
 ) {
-    val positionState =
-        remember {
-            derivedStateOf { inputState.value.getContinuousDirection(id) }
-        }
-
-    val position = positionState.value
-    val safePosition =
-        GeometryUtils.mapSquareToCircle(
-            position.ifUnspecified { Offset.Zero },
-        )
-
     val handler = remember { AnalogPointerHandler(id, analogPressId) }
     DisposableEffect(handler) {
         registerHandler(handler, AnalogPointerHandler.Data())
@@ -75,16 +66,36 @@ fun JamPadScope.ControlAnalog(
                 .onGloballyPositioned { updateHandlerPosition(handler, it.boundsInRoot()) },
         contentAlignment = Alignment.Center,
     ) {
-        Box(modifier = Modifier.fillMaxSize(0.75f)) {
+        Box(modifier = Modifier.fillMaxSize()) {
             background()
         }
+
+        val positionState =
+            remember {
+                derivedStateOf { inputState.value.getContinuousDirection(id) }
+            }
+
+        val pressedState =
+            remember {
+                derivedStateOf { inputState.value.getContinuousDirection(id) != Offset.Unspecified }
+            }
+
+        val position = positionState.value
+        val safePosition =
+            GeometryUtils.mapSquareToCircle(
+                position.ifUnspecified { Offset.Zero },
+            )
+
         Box(
             modifier =
                 Modifier
-                    .fillMaxSize(0.50f)
-                    .offset(maxWidth * safePosition.x * 0.25f, -maxHeight * safePosition.y * 0.25f),
+                    .fillMaxSize(foregroundSize)
+                    .offset(
+                        maxWidth * safePosition.x * 0.25f,
+                        -maxHeight * safePosition.y * 0.25f
+                    ),
         ) {
-            foreground(position != Offset.Unspecified)
+            foreground(pressedState)
         }
     }
 }

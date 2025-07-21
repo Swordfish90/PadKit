@@ -27,6 +27,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
@@ -39,7 +40,7 @@ import gg.jam.jampadcompose.utils.GeometryUtils.textUnit
 @Composable
 fun DefaultButtonForeground(
     modifier: Modifier = Modifier,
-    pressed: Boolean,
+    pressedState: State<Boolean>,
     scale: Float = 0.75f,
     iconScale: Float = 1f,
     iconPainter: Painter? = null,
@@ -59,7 +60,7 @@ fun DefaultButtonForeground(
                     .fillMaxSize(scale)
                     .aspectRatio(1f),
             shape = CircleShape,
-            color = if (pressed) pressedColor else color,
+            color = if (pressedState.value) pressedColor else color,
         ) {
             if (iconPainter != null) {
                 Icon(
@@ -79,7 +80,7 @@ fun DefaultButtonForeground(
                     textAlign = TextAlign.Center,
                     fontWeight = FontWeight.Bold,
                     text = label,
-                    color = if (pressed) textPressedColor else textColor,
+                    color = if (pressedState.value) textPressedColor else textColor,
                     fontSize = (minOf(maxHeight * 0.5f, maxWidth / label.length)).textUnit(),
                 )
             }

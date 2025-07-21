@@ -32,6 +32,7 @@ import gg.jam.jampadcompose.controls.ControlFaceButtons
 import gg.jam.jampadcompose.ids.ContinuousDirectionId
 import gg.jam.jampadcompose.ids.DiscreteDirectionId
 import gg.jam.jampadcompose.ids.KeyId
+import kotlinx.collections.immutable.toPersistentList
 
 @Composable
 fun App() {
@@ -64,7 +65,10 @@ private fun SampleGamePad() {
                     ControlButton(modifier = Modifier.radialPosition(90f), id = KeyId(1))
                     ControlButton(modifier = Modifier.radialPosition(60f), id = KeyId(2))
                     ControlAnalog(
-                        modifier = Modifier.radialPosition(-90f).radialScale(2f),
+                        modifier = Modifier
+                            .radialPosition(-90f)
+                            .radialScale(2f)
+                            .padding(8.dp),
                         id = ContinuousDirectionId(1),
                     )
                 },
@@ -74,7 +78,9 @@ private fun SampleGamePad() {
                 primaryDial = {
                     ControlFaceButtons(
                         modifier = Modifier.fillMaxSize(),
-                        ids = listOf(6, 7, 8).map { KeyId(it) },
+                        ids = listOf(6, 7, 8)
+                            .map { KeyId(it) }
+                            .toPersistentList(),
                     )
                 },
                 secondaryDials = {
@@ -82,7 +88,10 @@ private fun SampleGamePad() {
                     ControlButton(modifier = Modifier.radialPosition(90f), id = KeyId(4))
                     ControlButton(modifier = Modifier.radialPosition(60f), id = KeyId(5))
                     ControlAnalog(
-                        modifier = Modifier.radialPosition(-90f).radialScale(2f),
+                        modifier = Modifier
+                            .radialPosition(-90f)
+                            .radialScale(2f)
+                            .padding(8.dp),
                         id = ContinuousDirectionId(2),
                     )
                 },

@@ -20,6 +20,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.State
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -33,6 +34,7 @@ import gg.jam.jampadcompose.handlers.CrossPointerHandler
 import gg.jam.jampadcompose.ids.DiscreteDirectionId
 import gg.jam.jampadcompose.ui.DefaultControlBackground
 import gg.jam.jampadcompose.ui.DefaultCrossForeground
+import kotlinx.collections.immutable.toPersistentList
 
 @Composable
 fun JamPadScope.ControlCross(
@@ -40,11 +42,11 @@ fun JamPadScope.ControlCross(
     id: DiscreteDirectionId,
     allowDiagonals: Boolean = true,
     background: @Composable () -> Unit = { DefaultControlBackground() },
-    foreground: @Composable (Offset) -> Unit = {
-        DefaultCrossForeground(direction = it, allowDiagonals = allowDiagonals)
+    foreground: @Composable (State<Offset>) -> Unit = {
+        DefaultCrossForeground(directionState = it, allowDiagonals = allowDiagonals)
     },
 ) {
-    val directions = CrossPointerHandler.Direction.entries
+    val directions = CrossPointerHandler.Direction.entries.toPersistentList()
     val primaryAnchors = rememberPrimaryAnchors(directions, 0f)
     val compositeAnchors =
         if (allowDiagonals) {
@@ -77,6 +79,6 @@ fun JamPadScope.ControlCross(
                 .onGloballyPositioned { updateHandlerPosition(handler, it.boundsInRoot()) },
     ) {
         background()
-        foreground(positionState.value)
+        foreground(positionState)
     }
 }

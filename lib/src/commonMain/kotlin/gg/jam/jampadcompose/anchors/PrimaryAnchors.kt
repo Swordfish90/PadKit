@@ -22,18 +22,22 @@ import androidx.compose.ui.geometry.Offset
 import gg.jam.jampadcompose.utils.Constants
 import gg.jam.jampadcompose.utils.GeometryUtils
 import gg.jam.jampadcompose.utils.GeometryUtils.toRadians
+import kotlinx.collections.immutable.PersistentList
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.persistentSetOf
+import kotlinx.collections.immutable.toPersistentList
 import kotlin.math.cos
 import kotlin.math.sin
 
 @Composable
 fun <T> rememberPrimaryAnchors(
-    ids: List<T>,
+    ids: PersistentList<T>,
     rotationInDegrees: Float,
-): List<Anchor<T>> {
+): PersistentList<Anchor<T>> {
     return remember(ids, rotationInDegrees) {
         if (ids.size == 1) {
-            return@remember listOf(
-                Anchor(Offset.Zero, setOf(ids.first()), 0.5f),
+            return@remember persistentListOf(
+                Anchor(Offset.Zero, persistentSetOf(ids.first()), 0.5f),
             )
         }
         val baseRotation = rotationInDegrees.toRadians()
@@ -44,11 +48,11 @@ fun <T> rememberPrimaryAnchors(
                 val angle = (baseRotation + Constants.PI2 * index / ids.size)
                 Anchor(
                     Offset(cos(angle), sin(angle)),
-                    setOf(id),
+                    persistentSetOf(id),
                     size,
                 )
             }
 
-        primaryAnchors
+        primaryAnchors.toPersistentList()
     }
 }

@@ -23,6 +23,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -30,7 +31,7 @@ import androidx.compose.ui.graphics.Color
 @Composable
 fun DefaultCompositeForeground(
     modifier: Modifier = Modifier,
-    pressed: Boolean,
+    pressed: State<Boolean>,
     color: Color = MaterialTheme.colorScheme.primary.copy(alpha = 0.5f),
     pressedColor: Color = MaterialTheme.colorScheme.inversePrimary.copy(alpha = 0.5f),
 ) {
@@ -41,7 +42,7 @@ fun DefaultCompositeForeground(
         Surface(
             modifier = modifier.aspectRatio(1f),
             shape = CircleShape,
-            color = if (pressed) pressedColor else color,
+            color = if (pressed.value) pressedColor else color,
         ) { }
     }
 }

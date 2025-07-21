@@ -22,12 +22,13 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.unit.round
 import gg.jam.jampadcompose.anchors.Anchor
+import kotlinx.collections.immutable.PersistentList
 import kotlin.math.roundToInt
 
 @Composable
-internal fun <T> ButtonAnchorsLayout(
+internal inline fun <reified T> ButtonAnchorsLayout(
     modifier: Modifier = Modifier,
-    anchors: List<Anchor<T>>,
+    anchors: PersistentList<Anchor<T>>,
     content: @Composable () -> Unit,
 ) {
     Layout(
