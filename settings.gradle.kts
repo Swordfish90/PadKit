@@ -1,4 +1,4 @@
-rootProject.name = "JamPadCompose"
+rootProject.name = "PadKit"
 
 include(":sample:androidApp")
 include(":lib")

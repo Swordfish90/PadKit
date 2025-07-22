@@ -18,7 +18,7 @@ kotlin {
 
 android {
     compileSdk = (findProperty("android.compileSdk") as String).toInt()
-    namespace = "gg.jam.jampadcompose"
+    namespace = "gg.padkit.padkit"
 
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
 

@@ -23,15 +23,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import gg.jam.jampadcompose.JamPad
-import gg.jam.jampadcompose.config.HapticFeedbackType
-import gg.jam.jampadcompose.controls.ControlAnalog
-import gg.jam.jampadcompose.controls.ControlButton
-import gg.jam.jampadcompose.controls.ControlCross
-import gg.jam.jampadcompose.controls.ControlFaceButtons
-import gg.jam.jampadcompose.ids.ContinuousDirectionId
-import gg.jam.jampadcompose.ids.DiscreteDirectionId
-import gg.jam.jampadcompose.ids.KeyId
+import gg.padkit.PadKit
+import gg.padkit.config.HapticFeedbackType
+import gg.padkit.controls.ControlAnalog
+import gg.padkit.controls.ControlButton
+import gg.padkit.controls.ControlCross
+import gg.padkit.controls.ControlFaceButtons
+import gg.padkit.ids.ContinuousDirectionId
+import gg.padkit.ids.DiscreteDirectionId
+import gg.padkit.ids.KeyId
 import kotlinx.collections.immutable.toPersistentList
 
 @Composable
@@ -43,7 +43,7 @@ fun App() {
 
 @Composable
 private fun SampleGamePad() {
-    JamPad(
+    PadKit(
         hapticFeedbackType = HapticFeedbackType.PRESS,
         modifier = Modifier.fillMaxSize(),
     ) {

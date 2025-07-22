@@ -1,6 +1,6 @@
-# JamPadCompose
+# PadKit
 
-JamPadCompose is a Compose Multiplatform library that allows developers to create custom virtual gamepads for games and applications.
+PadKit is a Compose Multiplatform library that allows developers to create custom virtual gamepads for games and applications.
 
 ### Controls
 
@@ -15,15 +15,15 @@ The following controls are currently supported:
 Include the library in your project. Check latest tag for version:
 
 ```
-implementation("io.github.piepacker:jampadcompose:x.y.z")
+implementation("io.github.swordfish90:padkit:x.y.z")
 ```
 
-Here's a how you can use JamPadCompose to create a very simple gamepad layout.
+Here's a how you can use PadKit to create a very simple gamepad layout.
 
 ```kotlin
 @Composable
 private fun MyGamePad() {
-   JamPad(
+   PadKit(
       modifier = Modifier.fillMaxSize().aspectRatio(2f),
       onInputStateUpdated = { }
    ) {

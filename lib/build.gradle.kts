@@ -58,7 +58,7 @@ kotlin {
 
 android {
     compileSdk = (findProperty("android.compileSdk") as String).toInt()
-    namespace = "gg.jam.jampadcompose.lib"
+    namespace = "gg.padkit.lib"
 
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     sourceSets["main"].res.srcDirs("src/androidMain/res")
@@ -82,7 +82,7 @@ android {
 mavenPublishing {
     publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL, automaticRelease = true)
     signAllPublications()
-    coordinates("io.github.piepacker", "jampadcompose", "0.1.0-alpha1")
+    coordinates("io.github.swordfish", "padkit", "0.1.0-alpha1")
 
     pom {
         name.set(project.name)
@@ -104,9 +104,9 @@ mavenPublishing {
             }
         }
         scm {
-            url.set("https://github.com/piepacker/JamPadCompose")
-            connection.set("scm:git:git://github.com/piepacker/JamPadCompose.git")
-            developerConnection.set("scm:git:ssh://git@github.com/piepacker/JamPadCompose.git")
+            url.set("https://github.com/piepacker/PadKit")
+            connection.set("scm:git:git://github.com/piepacker/PadKit.git")
+            developerConnection.set("scm:git:ssh://git@github.com/piepacker/PadKit.git")
         }
     }
 }
