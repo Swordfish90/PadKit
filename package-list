@@ -1,7 +1,6 @@
 $dokka.format:html-v1
 $dokka.linkExtension:html
-$dokka.location:////PointingToDeclaration/lib/[root]/index.html
-$dokka.location://LayoutRadial/gg.padkit.PadKitScope#androidx.compose.ui.Modifier#androidx.compose.ui.unit.Dp#kotlin.Float#kotlin.Float#kotlin.Function0[kotlin.Unit]#kotlin.Function1[gg.padkit.layouts.radial.secondarydials.LayoutRadialSecondaryDialsScope,kotlin.Unit]/PointingToDeclaration/lib/[root]/-layout-radial.html
+
 module:lib
 gg.padkit
 gg.padkit.anchors
@@ -10,6 +9,6 @@ gg.padkit.controls
 gg.padkit.ids
 gg.padkit.inputevents
 gg.padkit.inputstate
+gg.padkit.layouts.radial
 gg.padkit.layouts.radial.secondarydials
 gg.padkit.ui
-gg.padkit.utils
