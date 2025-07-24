@@ -18,5 +18,10 @@ package gg.padkit.ids
 
 import kotlin.jvm.JvmInline
 
+/**
+ * An ID for a digital control, like a button.
+ *
+ * @param value The integer value of the ID.
+ */
 @JvmInline
 value class KeyId(val value: Int) : ControlId

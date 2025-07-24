@@ -26,6 +26,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
+/**
+ * The default background for a control.
+ *
+ * @param modifier The modifier to be applied to the background.
+ */
 @Composable
 fun DefaultControlBackground(modifier: Modifier = Modifier) {
     Box(

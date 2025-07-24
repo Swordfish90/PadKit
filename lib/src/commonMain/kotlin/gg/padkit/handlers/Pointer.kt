@@ -18,4 +18,4 @@ package gg.padkit.handlers
 
 import androidx.compose.ui.geometry.Offset
 
-data class Pointer(val pointerId: Long, val position: Offset)
+internal data class Pointer(val pointerId: Long, val position: Offset)

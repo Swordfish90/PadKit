@@ -30,7 +30,7 @@ import kotlin.math.cos
 import kotlin.math.sin
 
 @Composable
-fun <T> rememberPrimaryAnchors(
+internal fun <T> rememberPrimaryAnchors(
     ids: PersistentList<T>,
     rotationInDegrees: Float,
 ): PersistentList<Anchor<T>> {

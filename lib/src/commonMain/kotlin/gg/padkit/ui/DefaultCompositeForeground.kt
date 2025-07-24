@@ -28,6 +28,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 
+/**
+ * The default foreground for a composite button.
+ *
+ * @param modifier The modifier to be applied to the foreground.
+ * @param pressed A [State] that is `true` when the button is pressed.
+ * @param color The color of the button when it's not pressed.
+ * @param pressedColor The color of the button when it's pressed.
+ */
 @Composable
 fun DefaultCompositeForeground(
     modifier: Modifier = Modifier,

@@ -42,6 +42,22 @@ import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.PersistentSet
 import kotlinx.collections.immutable.persistentListOf
 
+/**
+ * A composable that provides a set of face buttons, like the ones found on a typical gamepad.
+ *
+ * This control allows the user to input digital values, which are represented by a [Boolean] for each button.
+ * The values of the buttons are available in the [InputState] of the [PadKit] composable.
+ *
+ * This is an overload of [ControlFaceButtons] that takes a list of [KeyId]s and arranges them in a circle.
+ *
+ * @param modifier The modifier to be applied to the control.
+ * @param rotationInDegrees The rotation of the buttons in degrees.
+ * @param ids The list of [KeyId]s to associate with the buttons.
+ * @param includeComposite Whether to include composite buttons, which are activated when multiple buttons are pressed at the same time.
+ * @param background The composable to use as the background of the control.
+ * @param foreground The composable to use as the foreground of each button. It receives the [KeyId] of the button and a [State] that is `true` when the button is being pressed.
+ * @param foregroundComposite The composable to use as the foreground of each composite button. It receives a [State] that is `true` when the composite button is being pressed.
+ */
 @Composable
 fun PadKitScope.ControlFaceButtons(
     modifier: Modifier = Modifier,
@@ -74,6 +90,21 @@ fun PadKitScope.ControlFaceButtons(
     )
 }
 
+/**
+ * A composable that provides a set of face buttons, like the ones found on a typical gamepad.
+ *
+ * This control allows the user to input digital values, which are represented by a [Boolean] for each button.
+ * The values of the buttons are available in the [InputState] of the [PadKit] composable.
+ *
+ * This is an overload of [ControlFaceButtons] that takes a list of [Anchor]s to define the layout of the buttons.
+ *
+ * @param modifier The modifier to be applied to the control.
+ * @param primaryAnchors The list of [Anchor]s that define the primary buttons.
+ * @param compositeAnchors The list of [Anchor]s that define the composite buttons.
+ * @param background The composable to use as the background of the control.
+ * @param foreground The composable to use as the foreground of each button. It receives the [KeyId] of the button and a [State] that is `true` when the button is being pressed.
+ * @param foregroundComposite The composable to use as the foreground of each composite button. It receives a [State] that is `true` when the composite button is being pressed.
+ */
 @Composable
 fun PadKitScope.ControlFaceButtons(
     modifier: Modifier = Modifier,

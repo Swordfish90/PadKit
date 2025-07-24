@@ -37,6 +37,20 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import gg.padkit.utils.GeometryUtils.textUnit
 
+/**
+ * The default foreground for a button control.
+ *
+ * @param modifier The modifier to be applied to the foreground.
+ * @param pressedState A [State] that is `true` when the button is pressed.
+ * @param scale The scale of the foreground.
+ * @param iconScale The scale of the icon.
+ * @param iconPainter The painter to use for the icon.
+ * @param label The label to display on the button.
+ * @param color The color of the button when it's not pressed.
+ * @param pressedColor The color of the button when it's pressed.
+ * @param textColor The color of the label when the button is not pressed.
+ * @param textPressedColor The color of the label when the button is pressed.
+ */
 @Composable
 fun DefaultButtonForeground(
     modifier: Modifier = Modifier,

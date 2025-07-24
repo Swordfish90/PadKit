@@ -20,7 +20,7 @@ import androidx.compose.ui.geometry.Offset
 import gg.padkit.inputstate.InputState
 import kotlinx.collections.immutable.PersistentMap
 
-class InputEventsGenerator {
+internal class InputEventsGenerator {
     private var previousInputState: InputState = InputState()
 
     fun onInputStateChanged(current: InputState): List<InputEvent> {

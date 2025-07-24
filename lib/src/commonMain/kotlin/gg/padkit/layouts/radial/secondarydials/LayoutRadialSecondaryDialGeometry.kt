@@ -23,8 +23,8 @@ import gg.padkit.utils.GeometryUtils.toRadians
 import kotlin.math.cos
 import kotlin.math.sin
 
-object LayoutRadialSecondaryDialGeometry {
-    internal fun findSecondaryDialCenterPosition(
+internal object LayoutRadialSecondaryDialGeometry {
+    fun findSecondaryDialCenterPosition(
         parentData: LayoutRadialSecondaryDialProperties,
         primaryDialSize: Float,
         baseSecondaryDialSize: Float,
@@ -37,7 +37,7 @@ object LayoutRadialSecondaryDialGeometry {
     }
 
     /** Returns the Rect representing the whole layout with the primary dial centered in 0,0. */
-    internal fun findLayoutRectRelativeToPrimaryDial(
+    fun findLayoutRectRelativeToPrimaryDial(
         secondaryDialMeasurablesParentData: List<LayoutRadialSecondaryDialProperties>,
         secondaryDialBaseScale: Float,
     ): Rect {

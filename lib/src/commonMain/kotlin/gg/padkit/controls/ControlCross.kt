@@ -36,6 +36,18 @@ import gg.padkit.ui.DefaultControlBackground
 import gg.padkit.ui.DefaultCrossForeground
 import kotlinx.collections.immutable.toPersistentList
 
+/**
+ * A composable that provides a cross control, also known as a D-pad.
+ *
+ * This control allows the user to input a discrete direction, which is represented by an [Offset].
+ * The value of the cross is available in the [InputState] of the [PadKit] composable.
+ *
+ * @param modifier The modifier to be applied to the control.
+ * @param id The [DiscreteDirectionId] to associate with this control.
+ * @param allowDiagonals Whether to allow diagonal input.
+ * @param background The composable to use as the background of the control.
+ * @param foreground The composable to use as the foreground of the control. It receives a [State] that contains the current [Offset] of the control.
+ */
 @Composable
 fun PadKitScope.ControlCross(
     modifier: Modifier = Modifier,

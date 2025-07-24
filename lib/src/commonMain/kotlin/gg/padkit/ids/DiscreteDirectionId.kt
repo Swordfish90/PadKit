@@ -18,5 +18,10 @@ package gg.padkit.ids
 
 import kotlin.jvm.JvmInline
 
+/**
+ * An ID for a discrete direction control, like a D-pad.
+ *
+ * @param value The integer value of the ID.
+ */
 @JvmInline
 value class DiscreteDirectionId(val value: Int) : ControlId

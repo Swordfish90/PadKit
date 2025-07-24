@@ -31,7 +31,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.newSingleThreadContext
 
 @OptIn(ExperimentalCoroutinesApi::class, DelicateCoroutinesApi::class)
-class AndroidHapticGenerator(applicationContext: Context) : HapticGenerator {
+internal class AndroidHapticGenerator(applicationContext: Context) : HapticGenerator {
     private val vibrator = buildVibrator(applicationContext)
     private val strongEffect = buildStrongVibrationEffect()
     private val weakEffect = buildWeakVibrationEffect()
@@ -85,7 +85,7 @@ class AndroidHapticGenerator(applicationContext: Context) : HapticGenerator {
 }
 
 @Composable
-actual fun rememberHapticGenerator(): HapticGenerator {
+internal actual fun rememberHapticGenerator(): HapticGenerator {
     val applicationContext = LocalContext.current.applicationContext
     return remember {
         AndroidHapticGenerator(applicationContext)

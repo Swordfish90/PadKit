@@ -40,6 +40,20 @@ import gg.padkit.ui.DefaultControlBackground
 import gg.padkit.utils.GeometryUtils
 import gg.padkit.utils.ifUnspecified
 
+/**
+ * A composable that provides an analog stick control.
+ *
+ * This control allows the user to input a continuous direction, which is represented by an [Offset].
+ * The value of the analog stick is available in the [InputState] of the [PadKit] composable.
+ *
+ * @param modifier The modifier to be applied to the control.
+ * @param id The [ContinuousDirectionId] to associate with this control.
+ * @param analogPressId The [KeyId] to associate with the press state of the analog stick.
+ * If this is not null, the digital key with this id will be set to `true` when the analog stick is being touched.
+ * @param foregroundSize The size of the foreground relative to the background.
+ * @param background The composable to use as the background of the control.
+ * @param foreground The composable to use as the foreground of the control. It receives a [State] that is `true` when the control is being touched.
+ */
 @Composable
 fun PadKitScope.ControlAnalog(
     modifier: Modifier = Modifier,

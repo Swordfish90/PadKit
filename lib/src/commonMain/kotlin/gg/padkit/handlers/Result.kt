@@ -18,7 +18,7 @@ package gg.padkit.handlers
 
 import gg.padkit.inputstate.InputState
 
-data class Result(
+internal data class Result(
     val inputState: InputState,
     val startDragGesture: Pointer? = null,
 )

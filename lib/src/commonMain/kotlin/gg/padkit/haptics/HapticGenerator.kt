@@ -18,9 +18,9 @@ package gg.padkit.haptics
 
 import androidx.compose.runtime.Composable
 
-interface HapticGenerator {
+internal interface HapticGenerator {
     fun generate(type: HapticEffect)
 }
 
 @Composable
-expect fun rememberHapticGenerator(): HapticGenerator
+internal expect fun rememberHapticGenerator(): HapticGenerator

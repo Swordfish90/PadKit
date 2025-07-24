@@ -25,11 +25,27 @@ import kotlinx.collections.immutable.PersistentSet
 import kotlinx.collections.immutable.persistentMapOf
 import kotlinx.collections.immutable.persistentSetOf
 
+/**
+ * Represents the state of the gamepad at a given time.
+ *
+ * It contains the state of all the controls, including digital keys, continuous directions, and discrete directions.
+ *
+ * @property digitalKeys The state of the digital keys. The set contains the [KeyId]s of the keys that are currently pressed.
+ * @property continuousDirections The state of the continuous directions. The map contains the [ContinuousDirectionId]s of the controls that are currently being touched, and their corresponding [Offset]s.
+ * @property discreteDirections The state of the discrete directions. The map contains the [DiscreteDirectionId]s of the controls that are currently being touched, and their corresponding [Offset]s.
+ */
 data class InputState(
     internal val digitalKeys: PersistentSet<Int> = persistentSetOf(),
     internal val continuousDirections: PersistentMap<Int, Offset> = persistentMapOf(),
     internal val discreteDirections: PersistentMap<Int, Offset> = persistentMapOf(),
 ) {
+    /**
+     * Sets the state of a digital key.
+     *
+     * @param digitalId The [KeyId] of the key to set.
+     * @param value The new state of the key. `true` if pressed, `false` otherwise.
+     * @return A new [InputState] with the updated key state.
+     */
     fun setDigitalKey(
         digitalId: KeyId,
         value: Boolean,
@@ -41,10 +57,23 @@ data class InputState(
         }
     }
 
+    /**
+     * Gets the state of a digital key.
+     *
+     * @param digitalId The [KeyId] of the key to get.
+     * @return `true` if the key is pressed, `false` otherwise.
+     */
     fun getDigitalKey(digitalId: KeyId): Boolean {
         return digitalKeys.contains(digitalId.value)
     }
 
+    /**
+     * Sets the state of a continuous direction control.
+     *
+     * @param continuousDirectionId The [ContinuousDirectionId] of the control to set.
+     * @param offset The new [Offset] of the control.
+     * @return A new [InputState] with the updated control state.
+     */
     fun setContinuousDirection(
         continuousDirectionId: ContinuousDirectionId,
         offset: Offset,
@@ -56,6 +85,13 @@ data class InputState(
         }
     }
 
+    /**
+     * Gets the state of a continuous direction control.
+     *
+     * @param continuousDirectionId The [ContinuousDirectionId] of the control to get.
+     * @param default The default [Offset] to return if the control is not being touched.
+     * @return The [Offset] of the control, or [default] if the control is not being touched.
+     */
     fun getContinuousDirection(
         continuousDirectionId: ContinuousDirectionId,
         default: Offset = Offset.Unspecified,
@@ -63,6 +99,13 @@ data class InputState(
         return continuousDirections.getOrElse(continuousDirectionId.value) { default }
     }
 
+    /**
+     * Sets the state of a discrete direction control.
+     *
+     * @param discreteDirectionId The [DiscreteDirectionId] of the control to set.
+     * @param offset The new [Offset] of the control.
+     * @return A new [InputState] with the updated control state.
+     */
     fun setDiscreteDirection(
         discreteDirectionId: DiscreteDirectionId,
         offset: Offset,
@@ -74,6 +117,13 @@ data class InputState(
         }
     }
 
+    /**
+     * Gets the state of a discrete direction control.
+     *
+     * @param discreteDirectionId The [DiscreteDirectionId] of the control to get.
+     * @param default The default [Offset] to return if the control is not being touched.
+     * @return The [Offset] of the control, or [default] if the control is not being touched.
+     */
     fun getDiscreteDirection(
         discreteDirectionId: DiscreteDirectionId,
         default: Offset = Offset.Unspecified,

@@ -20,7 +20,7 @@ import androidx.compose.ui.geometry.Offset
 import gg.padkit.config.HapticFeedbackType
 import gg.padkit.inputstate.InputState
 
-class InputHapticGenerator(
+internal class InputHapticGenerator(
     private val generator: HapticGenerator,
     private val hapticFeedbackType: HapticFeedbackType,
     private var previousInputState: InputState,

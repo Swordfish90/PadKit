@@ -36,6 +36,18 @@ import gg.padkit.layouts.anchors.ButtonAnchorsLayout
 import gg.padkit.utils.ifUnspecified
 import kotlinx.collections.immutable.toPersistentList
 
+/**
+ * The default foreground for a cross control.
+ *
+ * @param modifier The modifier to be applied to the foreground.
+ * @param directionState A [State] that contains the current [Offset] of the control.
+ * @param rightDial The composable to use for the right directional button.
+ * @param bottomDial The composable to use for the bottom directional button.
+ * @param leftDial The composable to use for the left directional button.
+ * @param topDial The composable to use for the top directional button.
+ * @param foregroundComposite The composable to use for the composite buttons (diagonals).
+ * @param allowDiagonals Whether to allow diagonal input.
+ */
 @Composable
 fun DefaultCrossForeground(
     modifier: Modifier = Modifier,

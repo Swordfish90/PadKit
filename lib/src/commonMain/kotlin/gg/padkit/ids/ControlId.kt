@@ -16,4 +16,13 @@
 
 package gg.padkit.ids
 
+/**
+ * A sealed interface for all control IDs.
+ *
+ * This is used to identify controls in the [gg.padkit.PadKit] composable.
+ *
+ * @see KeyId
+ * @see ContinuousDirectionId
+ * @see DiscreteDirectionId
+ */
 sealed interface ControlId

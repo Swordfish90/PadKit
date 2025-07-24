@@ -29,6 +29,9 @@ import gg.padkit.ids.KeyId
 import gg.padkit.inputstate.InputState
 import gg.padkit.utils.relativeToCenter
 
+/**
+ * A scope for the children of the [PadKit] composable.
+ */
 @Stable
 class PadKitScope {
     private data class HandlerState(

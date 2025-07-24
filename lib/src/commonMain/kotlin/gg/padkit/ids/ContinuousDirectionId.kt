@@ -18,5 +18,10 @@ package gg.padkit.ids
 
 import kotlin.jvm.JvmInline
 
+/**
+ * An ID for a continuous direction control, like an analog stick.
+ *
+ * @param value The integer value of the ID.
+ */
 @JvmInline
 value class ContinuousDirectionId(val value: Int) : ControlId

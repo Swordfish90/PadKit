@@ -18,10 +18,37 @@ package gg.padkit.inputevents
 
 import androidx.compose.ui.geometry.Offset
 
+/**
+ * Represents a single input event.
+ *
+ * This is used to notify the user of changes in the input state.
+ *
+ * @see ContinuousDirection
+ * @see DiscreteDirection
+ * @see Button
+ */
 sealed interface InputEvent {
+    /**
+     * An event for a continuous direction control.
+     *
+     * @param id The ID of the control.
+     * @param direction The new direction of the control.
+     */
     data class ContinuousDirection(val id: Int, val direction: Offset) : InputEvent
 
+    /**
+     * An event for a discrete direction control.
+     *
+     * @param id The ID of the control.
+     * @param direction The new direction of the control.
+     */
     data class DiscreteDirection(val id: Int, val direction: Offset) : InputEvent
 
+    /**
+     * An event for a button control.
+     *
+     * @param id The ID of the control.
+     * @param pressed `true` if the button is pressed, `false` otherwise.
+     */
     data class Button(val id: Int, val pressed: Boolean) : InputEvent
 }

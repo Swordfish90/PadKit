@@ -28,7 +28,7 @@ import kotlin.math.cos
 import kotlin.math.sin
 
 @Composable
-fun <T> rememberCompositeAnchors(
+internal fun <T> rememberCompositeAnchors(
     ids: PersistentList<T>,
     rotationInDegrees: Float,
 ): PersistentList<Anchor<T>> {

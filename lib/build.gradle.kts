@@ -27,31 +27,14 @@ kotlin {
     }
 
     sourceSets {
-        val commonMain by getting {
-            dependencies {
-                implementation(compose.runtime)
-                implementation(compose.foundation)
-                implementation(compose.material3)
+        commonMain.dependencies {
+            implementation(compose.runtime)
+            implementation(compose.foundation)
+            implementation(compose.material3)
+            implementation(compose.materialIconsExtended)
 
-                implementation("org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.7")
-                implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.6.2")
-                api("org.lighthousegames:logging:1.4.1")
-            }
-        }
-        val androidMain by getting {
-            dependencies { }
-        }
-        val iosX64Main by getting
-        val iosArm64Main by getting
-        val iosSimulatorArm64Main by getting
-        val iosMain by creating {
-            dependsOn(commonMain)
-            iosX64Main.dependsOn(this)
-            iosArm64Main.dependsOn(this)
-            iosSimulatorArm64Main.dependsOn(this)
-        }
-        val desktopMain by getting {
-            dependencies { }
+            implementation("org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.7")
+            implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.6.2")
         }
     }
 }

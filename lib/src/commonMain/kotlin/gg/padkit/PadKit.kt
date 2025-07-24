@@ -38,6 +38,36 @@ import gg.padkit.inputevents.InputEvent
 import gg.padkit.inputevents.InputEventsGenerator
 import gg.padkit.inputstate.InputState
 
+/**
+ * A layout composable that creates a virtual gamepad.
+ *
+ * PadKit places its children inside a [PadKitScope], allowing you to use various controls like
+ * [gg.padkit.controls.ControlAnalog], [gg.padkit.controls.ControlButton], [gg.padkit.controls.ControlCross], and [gg.padkit.controls.ControlFaceButtons]. It listens for
+ * pointer (touch) events within its bounds and updates the state of the controls accordingly.
+ *
+ * The most recent state of all controls is available through the [onInputStateUpdated] callback,
+ * which provides an [InputState] object. For a stream of discrete input changes, use the
+ * [onInputEvents] callback.
+ *
+ * By default, PadKit fills the maximum size available to it. You can change this behavior by
+ * providing a different `modifier`. The aspect ratio of the gamepad can be controlled via the
+ * modifier chain, which is useful for maintaining a consistent layout across different screen sizes.
+ *
+ * For testing or programmatic control, you can use [simulatedState] and [simulatedControlIds]
+ * to override the input from user touches for specific controls.
+ *
+ * @param modifier The modifier to be applied to the layout.
+ * @param onInputStateUpdated A callback that is invoked frequently with the complete, up-to-date
+ * [InputState] of all controls on the gamepad.
+ * @param onInputEvents A callback that is invoked only when a control's state changes, providing a
+ * list of specific [InputEvent]s that have occurred.
+ * @param hapticFeedbackType The type of haptic feedback to generate when a control is used.
+ * @param simulatedControlIds A set of [ControlId]s that should be controlled by the [simulatedState]
+ * instead of user input. This is useful for testing or creating demos.
+ * @param simulatedState The [InputState] to use for the controls specified in [simulatedControlIds].
+ * @param content A lambda that receives a [PadKitScope] where you can define the layout of the
+ * gamepad by adding control composables.
+ */
 @Composable
 fun PadKit(
     modifier: Modifier = Modifier,

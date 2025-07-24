@@ -16,7 +16,7 @@
 
 package gg.padkit.haptics
 
-enum class HapticEffect {
+internal enum class HapticEffect {
     PRESS,
     RELEASE,
 }

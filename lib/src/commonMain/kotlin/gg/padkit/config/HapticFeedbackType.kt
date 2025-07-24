@@ -16,8 +16,22 @@
 
 package gg.padkit.config
 
+/**
+ * The type of haptic feedback to generate when a control is used.
+ */
 enum class HapticFeedbackType {
+    /**
+     * No haptic feedback.
+     */
     NONE,
+
+    /**
+     * Haptic feedback is generated when a control is pressed.
+     */
     PRESS,
+
+    /**
+     * Haptic feedback is generated when a control is pressed and when it is released.
+     */
     PRESS_RELEASE,
 }
