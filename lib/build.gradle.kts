@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.compose)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.maven.publish)
+    alias(libs.plugins.dokka)
 }
 
 kotlin {
@@ -65,13 +66,13 @@ android {
 mavenPublishing {
     publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL, automaticRelease = true)
     signAllPublications()
-    coordinates("io.github.swordfish", "padkit", "0.1.0-alpha1")
+    coordinates("io.github.swordfish90", "padkit", "1.0.0-alpha1")
 
     pom {
         name.set(project.name)
         description.set("A virtual gamepad library for Jetpack Compose.")
         inceptionYear.set("2024")
-        url.set("https://github.com/piepacker/JamPadCompose/")
+        url.set("https://github.com/Swordfish90/PadKit/")
         licenses {
             license {
                 name.set("The Apache License, Version 2.0")
@@ -81,15 +82,15 @@ mavenPublishing {
         }
         developers {
             developer {
-                id.set("Jam.gg")
-                name.set("Jam.gg")
-                url.set("https://github.com/piepacker/")
+                id.set("Filippo Scognamiglio")
+                name.set("Filippo Scognamiglio")
+                url.set("https://github.com/Swordfish90/")
             }
         }
         scm {
-            url.set("https://github.com/piepacker/PadKit")
-            connection.set("scm:git:git://github.com/piepacker/PadKit.git")
-            developerConnection.set("scm:git:ssh://git@github.com/piepacker/PadKit.git")
+            url.set("https://github.com/Swordfish90/PadKit")
+            connection.set("scm:git:git://github.com/Swordfish90/PadKit.git")
+            developerConnection.set("scm:git:ssh://git@github.com/Swordfish90/PadKit.git")
         }
     }
 }

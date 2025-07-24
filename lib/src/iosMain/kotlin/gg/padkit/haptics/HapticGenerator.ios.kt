@@ -20,7 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import platform.UIKit.UIImpactFeedbackGenerator
 
-object IosHapticGenerator : HapticGenerator {
+internal object IosHapticGenerator : HapticGenerator {
     private val impactFeedbackGenerator = UIImpactFeedbackGenerator()
 
     override fun generate(type: HapticEffect) {
@@ -32,6 +32,6 @@ object IosHapticGenerator : HapticGenerator {
 }
 
 @Composable
-actual fun rememberHapticGenerator(): HapticGenerator {
+internal actual fun rememberHapticGenerator(): HapticGenerator {
     return remember { IosHapticGenerator }
 }
