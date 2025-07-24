@@ -18,11 +18,11 @@ package gg.padkit.handlers
 
 import androidx.compose.ui.geometry.Offset
 import gg.padkit.anchors.Anchor
-import gg.padkit.ids.DiscreteDirectionId
+import gg.padkit.ids.Id
 import gg.padkit.inputstate.InputState
 
 internal class CrossPointerHandler(
-    private val directionId: DiscreteDirectionId,
+    private val directionId: Id.DiscreteDirection,
     private val directions: List<Anchor<Direction>>,
 ) : PointerHandler {
     enum class Direction {

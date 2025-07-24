@@ -33,8 +33,7 @@ import androidx.compose.ui.layout.boundsInRoot
 import androidx.compose.ui.layout.onGloballyPositioned
 import gg.padkit.PadKitScope
 import gg.padkit.handlers.AnalogPointerHandler
-import gg.padkit.ids.ContinuousDirectionId
-import gg.padkit.ids.KeyId
+import gg.padkit.ids.Id
 import gg.padkit.ui.DefaultButtonForeground
 import gg.padkit.ui.DefaultControlBackground
 import gg.padkit.utils.GeometryUtils
@@ -47,8 +46,8 @@ import gg.padkit.utils.ifUnspecified
  * The value of the analog stick is available in the [InputState] of the [PadKit] composable.
  *
  * @param modifier The modifier to be applied to the control.
- * @param id The [ContinuousDirectionId] to associate with this control.
- * @param analogPressId The [KeyId] to associate with the press state of the analog stick.
+ * @param id The [Id.ContinuousDirection] to associate with this control.
+ * @param analogPressId The [Id.Key] to associate with the press state of the analog stick.
  * If this is not null, the digital key with this id will be set to `true` when the analog stick is being touched.
  * @param foregroundSize The size of the foreground relative to the background.
  * @param background The composable to use as the background of the control.
@@ -57,8 +56,8 @@ import gg.padkit.utils.ifUnspecified
 @Composable
 fun PadKitScope.ControlAnalog(
     modifier: Modifier = Modifier,
-    id: ContinuousDirectionId,
-    analogPressId: KeyId? = null,
+    id: Id.ContinuousDirection,
+    analogPressId: Id.Key? = null,
     foregroundSize: Float = 0.66f,
     background: @Composable () -> Unit = { DefaultControlBackground() },
     foreground: @Composable (State<Boolean>) -> Unit = {
@@ -106,7 +105,7 @@ fun PadKitScope.ControlAnalog(
                     .fillMaxSize(foregroundSize)
                     .offset(
                         maxWidth * safePosition.x * 0.25f,
-                        -maxHeight * safePosition.y * 0.25f
+                        -maxHeight * safePosition.y * 0.25f,
                     ),
         ) {
             foreground(pressedState)

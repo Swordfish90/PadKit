@@ -16,13 +16,39 @@
 
 package gg.padkit.ids
 
+import kotlin.jvm.JvmInline
+
 /**
  * A sealed interface for all control IDs.
  *
  * This is used to identify controls in the [gg.padkit.PadKit] composable.
  *
- * @see KeyId
- * @see ContinuousDirectionId
- * @see DiscreteDirectionId
+ * @see Key
+ * @see ContinuousDirection
+ * @see DiscreteDirection
  */
-sealed interface ControlId
+sealed interface Id {
+    /**
+     * An ID for a digital control, like a button.
+     *
+     * @param value The integer value of the ID.
+     */
+    @JvmInline
+    value class Key(val value: Int) : Id
+
+    /**
+     * An ID for a continuous direction control, like an analog stick.
+     *
+     * @param value The integer value of the ID.
+     */
+    @JvmInline
+    value class ContinuousDirection(val value: Int) : Id
+
+    /**
+     * An ID for a discrete direction control, like a D-pad.
+     *
+     * @param value The integer value of the ID.
+     */
+    @JvmInline
+    value class DiscreteDirection(val value: Int) : Id
+}

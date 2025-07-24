@@ -16,11 +16,11 @@
 
 package gg.padkit.handlers
 
-import gg.padkit.ids.KeyId
+import gg.padkit.ids.Id
 import gg.padkit.inputstate.InputState
 import gg.padkit.inputstate.setDigitalKeyIfPressed
 
-internal class ButtonPointerHandler(private val buttonId: KeyId) : PointerHandler {
+internal class ButtonPointerHandler(private val buttonId: Id.Key) : PointerHandler {
     override fun handle(
         pointers: List<Pointer>,
         inputState: InputState,

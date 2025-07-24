@@ -16,11 +16,11 @@
 
 package gg.padkit.inputstate
 
-import gg.padkit.ids.KeyId
+import gg.padkit.ids.Id
 
 // It's possible that multiple buttons set the same key so we don't want to override their behavior.
 internal fun InputState.setDigitalKeyIfPressed(
-    digitalId: KeyId,
+    digitalId: Id.Key,
     value: Boolean,
 ): InputState {
     if (value) {

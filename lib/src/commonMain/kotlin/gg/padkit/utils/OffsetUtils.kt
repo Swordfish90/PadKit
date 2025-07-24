@@ -22,27 +22,27 @@ import androidx.compose.ui.geometry.isUnspecified
 
 /** Return the relative position in the given rectangle with respect to the top left corner.
  *  Result in range [0, 1] on both axis. */
-fun Offset.relativeToTopLeft(rect: Rect): Offset {
+internal fun Offset.relativeToTopLeft(rect: Rect): Offset {
     val relativePosition = this - rect.topLeft
     return Offset(relativePosition.x / rect.width, relativePosition.y / rect.height)
 }
 
 /** Return the relative position in the given rectangle with respect to the top left corner.
  *  Result in range [-1, 1] on both axis. */
-fun Offset.relativeToCenter(rect: Rect): Offset {
+internal fun Offset.relativeToCenter(rect: Rect): Offset {
     val relativePosition = this - rect.center
     return Offset(relativePosition.x / rect.width, relativePosition.y / rect.height) * 2f
 }
 
-fun Offset.coerceIn(
+internal fun Offset.coerceIn(
     min: Offset,
     max: Offset,
 ): Offset {
     return Offset(x.coerceIn(min.x, max.x), y.coerceIn(min.y, max.y))
 }
 
-fun Offset.ifUnspecified(producer: () -> Offset): Offset {
+internal fun Offset.ifUnspecified(producer: () -> Offset): Offset {
     return if (this.isUnspecified) producer() else this
 }
 
-fun Offset.min() = minOf(this.x, this.y)
+internal fun Offset.min() = minOf(this.x, this.y)

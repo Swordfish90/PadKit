@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+package gg.padkit.layouts.radial
+
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -68,7 +70,7 @@ fun PadKitScope.LayoutRadial(
             )
 
         val relativeLayoutRect =
-            gg.padkit.layouts.radial.secondarydials.LayoutRadialSecondaryDialGeometry.findLayoutRectRelativeToPrimaryDial(
+            LayoutRadialSecondaryDialGeometry.findLayoutRectRelativeToPrimaryDial(
                 secondaryDialsProperties,
                 secondaryDialsBaseScale,
             )

@@ -31,7 +31,7 @@ import gg.padkit.PadKitScope
 import gg.padkit.anchors.rememberCompositeAnchors
 import gg.padkit.anchors.rememberPrimaryAnchors
 import gg.padkit.handlers.CrossPointerHandler
-import gg.padkit.ids.DiscreteDirectionId
+import gg.padkit.ids.Id
 import gg.padkit.ui.DefaultControlBackground
 import gg.padkit.ui.DefaultCrossForeground
 import kotlinx.collections.immutable.toPersistentList
@@ -43,7 +43,7 @@ import kotlinx.collections.immutable.toPersistentList
  * The value of the cross is available in the [InputState] of the [PadKit] composable.
  *
  * @param modifier The modifier to be applied to the control.
- * @param id The [DiscreteDirectionId] to associate with this control.
+ * @param id The [Id.DiscreteDirection] to associate with this control.
  * @param allowDiagonals Whether to allow diagonal input.
  * @param background The composable to use as the background of the control.
  * @param foreground The composable to use as the foreground of the control. It receives a [State] that contains the current [Offset] of the control.
@@ -51,7 +51,7 @@ import kotlinx.collections.immutable.toPersistentList
 @Composable
 fun PadKitScope.ControlCross(
     modifier: Modifier = Modifier,
-    id: DiscreteDirectionId,
+    id: Id.DiscreteDirection,
     allowDiagonals: Boolean = true,
     background: @Composable () -> Unit = { DefaultControlBackground() },
     foreground: @Composable (State<Offset>) -> Unit = {

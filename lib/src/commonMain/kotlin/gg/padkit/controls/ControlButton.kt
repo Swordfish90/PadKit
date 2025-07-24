@@ -28,7 +28,7 @@ import androidx.compose.ui.layout.boundsInRoot
 import androidx.compose.ui.layout.onGloballyPositioned
 import gg.padkit.PadKitScope
 import gg.padkit.handlers.ButtonPointerHandler
-import gg.padkit.ids.KeyId
+import gg.padkit.ids.Id
 import gg.padkit.ui.DefaultButtonForeground
 import gg.padkit.ui.DefaultControlBackground
 
@@ -39,14 +39,14 @@ import gg.padkit.ui.DefaultControlBackground
  * The value of the button is available in the [InputState] of the [PadKit] composable.
  *
  * @param modifier The modifier to be applied to the control.
- * @param id The [KeyId] to associate with this control.
+ * @param id The [Id.Key] to associate with this control.
  * @param background The composable to use as the background of the control. It receives a [State] that is `true` when the control is being pressed.
  * @param foreground The composable to use as the foreground of the control. It receives a [State] that is `true` when the control is being pressed.
  */
 @Composable
 fun PadKitScope.ControlButton(
     modifier: Modifier = Modifier,
-    id: KeyId,
+    id: Id.Key,
     background: @Composable (State<Boolean>) -> Unit = { DefaultControlBackground() },
     foreground: @Composable (State<Boolean>) -> Unit = { DefaultButtonForeground(pressedState = it) },
 ) {

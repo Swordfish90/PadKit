@@ -17,8 +17,7 @@
 package gg.padkit.handlers
 
 import androidx.compose.ui.geometry.Offset
-import gg.padkit.ids.ContinuousDirectionId
-import gg.padkit.ids.KeyId
+import gg.padkit.ids.Id
 import gg.padkit.inputstate.InputState
 import gg.padkit.inputstate.setDigitalKeyIfPressed
 import gg.padkit.utils.Constants
@@ -28,8 +27,8 @@ import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 
 internal class AnalogPointerHandler(
-    private val directionId: ContinuousDirectionId,
-    private val analogPressId: KeyId?,
+    private val directionId: Id.ContinuousDirection,
+    private val analogPressId: Id.Key?,
 ) : PointerHandler {
     data class Data(
         var lastDownEvent: Instant = Instant.DISTANT_PAST,

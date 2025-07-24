@@ -32,7 +32,7 @@ import gg.padkit.anchors.Anchor
 import gg.padkit.anchors.rememberCompositeAnchors
 import gg.padkit.anchors.rememberPrimaryAnchors
 import gg.padkit.handlers.FaceButtonsPointerHandler
-import gg.padkit.ids.KeyId
+import gg.padkit.ids.Id
 import gg.padkit.inputstate.InputState
 import gg.padkit.layouts.anchors.ButtonAnchorsLayout
 import gg.padkit.ui.DefaultButtonForeground
@@ -48,24 +48,24 @@ import kotlinx.collections.immutable.persistentListOf
  * This control allows the user to input digital values, which are represented by a [Boolean] for each button.
  * The values of the buttons are available in the [InputState] of the [PadKit] composable.
  *
- * This is an overload of [ControlFaceButtons] that takes a list of [KeyId]s and arranges them in a circle.
+ * This is an overload of [ControlFaceButtons] that takes a list of [Id.Key]s and arranges them in a circle.
  *
  * @param modifier The modifier to be applied to the control.
  * @param rotationInDegrees The rotation of the buttons in degrees.
- * @param ids The list of [KeyId]s to associate with the buttons.
+ * @param ids The list of [Id.Key]s to associate with the buttons.
  * @param includeComposite Whether to include composite buttons, which are activated when multiple buttons are pressed at the same time.
  * @param background The composable to use as the background of the control.
- * @param foreground The composable to use as the foreground of each button. It receives the [KeyId] of the button and a [State] that is `true` when the button is being pressed.
+ * @param foreground The composable to use as the foreground of each button. It receives the [Id.Key] of the button and a [State] that is `true` when the button is being pressed.
  * @param foregroundComposite The composable to use as the foreground of each composite button. It receives a [State] that is `true` when the composite button is being pressed.
  */
 @Composable
 fun PadKitScope.ControlFaceButtons(
     modifier: Modifier = Modifier,
     rotationInDegrees: Float = 0f,
-    ids: PersistentList<KeyId>,
+    ids: PersistentList<Id.Key>,
     includeComposite: Boolean = true,
     background: @Composable () -> Unit = { DefaultControlBackground() },
-    foreground: @Composable (KeyId, State<Boolean>) -> Unit = { _, pressed ->
+    foreground: @Composable (Id.Key, State<Boolean>) -> Unit = { _, pressed ->
         DefaultButtonForeground(pressedState = pressed)
     },
     foregroundComposite: @Composable (State<Boolean>) -> Unit = { pressed ->
@@ -102,16 +102,16 @@ fun PadKitScope.ControlFaceButtons(
  * @param primaryAnchors The list of [Anchor]s that define the primary buttons.
  * @param compositeAnchors The list of [Anchor]s that define the composite buttons.
  * @param background The composable to use as the background of the control.
- * @param foreground The composable to use as the foreground of each button. It receives the [KeyId] of the button and a [State] that is `true` when the button is being pressed.
+ * @param foreground The composable to use as the foreground of each button. It receives the [Id.Key] of the button and a [State] that is `true` when the button is being pressed.
  * @param foregroundComposite The composable to use as the foreground of each composite button. It receives a [State] that is `true` when the composite button is being pressed.
  */
 @Composable
 fun PadKitScope.ControlFaceButtons(
     modifier: Modifier = Modifier,
-    primaryAnchors: PersistentList<Anchor<KeyId>>,
-    compositeAnchors: PersistentList<Anchor<KeyId>>,
+    primaryAnchors: PersistentList<Anchor<Id.Key>>,
+    compositeAnchors: PersistentList<Anchor<Id.Key>>,
     background: @Composable () -> Unit = { DefaultControlBackground() },
-    foreground: @Composable (KeyId, State<Boolean>) -> Unit = { _, pressed ->
+    foreground: @Composable (Id.Key, State<Boolean>) -> Unit = { _, pressed ->
         DefaultButtonForeground(pressedState = pressed)
     },
     foregroundComposite: @Composable (State<Boolean>) -> Unit = { pressed ->
@@ -159,24 +159,26 @@ fun PadKitScope.ControlFaceButtons(
 
 @Composable
 private fun ButtonForeground(
-    keyId: KeyId,
+    keyId: Id.Key,
     inputState: State<InputState>,
-    content: @Composable (KeyId, State<Boolean>) -> Unit
+    content: @Composable (Id.Key, State<Boolean>) -> Unit,
 ) {
-    val pressed = remember {
-        derivedStateOf { inputState.value.getDigitalKey(keyId) }
-    }
+    val pressed =
+        remember {
+            derivedStateOf { inputState.value.getDigitalKey(keyId) }
+        }
     content(keyId, pressed)
 }
 
 @Composable
 private fun CompositeForeground(
-    keys: PersistentSet<KeyId>,
+    keys: PersistentSet<Id.Key>,
     inputState: State<InputState>,
-    content: @Composable (State<Boolean>) -> Unit
+    content: @Composable (State<Boolean>) -> Unit,
 ) {
-    val pressed = remember {
-        derivedStateOf { keys.all { inputState.value.getDigitalKey(it) } }
-    }
+    val pressed =
+        remember {
+            derivedStateOf { keys.all { inputState.value.getDigitalKey(it) } }
+        }
     content(pressed)
 }

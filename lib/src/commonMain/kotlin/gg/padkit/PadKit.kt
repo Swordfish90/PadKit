@@ -33,7 +33,7 @@ import gg.padkit.config.HapticFeedbackType
 import gg.padkit.handlers.Pointer
 import gg.padkit.haptics.InputHapticGenerator
 import gg.padkit.haptics.rememberHapticGenerator
-import gg.padkit.ids.ControlId
+import gg.padkit.ids.Id
 import gg.padkit.inputevents.InputEvent
 import gg.padkit.inputevents.InputEventsGenerator
 import gg.padkit.inputstate.InputState
@@ -62,7 +62,7 @@ import gg.padkit.inputstate.InputState
  * @param onInputEvents A callback that is invoked only when a control's state changes, providing a
  * list of specific [InputEvent]s that have occurred.
  * @param hapticFeedbackType The type of haptic feedback to generate when a control is used.
- * @param simulatedControlIds A set of [ControlId]s that should be controlled by the [simulatedState]
+ * @param simulatedControlIds A set of [Id]s that should be controlled by the [simulatedState]
  * instead of user input. This is useful for testing or creating demos.
  * @param simulatedState The [InputState] to use for the controls specified in [simulatedControlIds].
  * @param content A lambda that receives a [PadKitScope] where you can define the layout of the
@@ -74,7 +74,7 @@ fun PadKit(
     onInputStateUpdated: ((InputState) -> Unit)? = null,
     onInputEvents: ((List<InputEvent>) -> Unit)? = null,
     hapticFeedbackType: HapticFeedbackType = HapticFeedbackType.PRESS,
-    simulatedControlIds: State<Set<ControlId>> = mutableStateOf(emptySet()),
+    simulatedControlIds: State<Set<Id>> = mutableStateOf(emptySet()),
     simulatedState: State<InputState> = mutableStateOf(InputState()),
     content: @Composable PadKitScope.() -> Unit,
 ) {

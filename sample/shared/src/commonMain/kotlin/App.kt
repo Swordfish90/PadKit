@@ -29,9 +29,8 @@ import gg.padkit.controls.ControlAnalog
 import gg.padkit.controls.ControlButton
 import gg.padkit.controls.ControlCross
 import gg.padkit.controls.ControlFaceButtons
-import gg.padkit.ids.ContinuousDirectionId
-import gg.padkit.ids.DiscreteDirectionId
-import gg.padkit.ids.KeyId
+import gg.padkit.ids.Id
+import gg.padkit.layouts.radial.LayoutRadial
 import kotlinx.collections.immutable.toPersistentList
 
 @Composable
@@ -57,19 +56,20 @@ private fun SampleGamePad() {
                 primaryDial = {
                     ControlCross(
                         modifier = Modifier.fillMaxSize(),
-                        id = DiscreteDirectionId(0),
+                        id = Id.DiscreteDirection(0),
                     )
                 },
                 secondaryDials = {
-                    ControlButton(modifier = Modifier.radialPosition(120f), id = KeyId(0))
-                    ControlButton(modifier = Modifier.radialPosition(90f), id = KeyId(1))
-                    ControlButton(modifier = Modifier.radialPosition(60f), id = KeyId(2))
+                    ControlButton(modifier = Modifier.radialPosition(120f), id = Id.Key(0))
+                    ControlButton(modifier = Modifier.radialPosition(90f), id = Id.Key(1))
+                    ControlButton(modifier = Modifier.radialPosition(60f), id = Id.Key(2))
                     ControlAnalog(
-                        modifier = Modifier
-                            .radialPosition(-90f)
-                            .radialScale(2f)
-                            .padding(8.dp),
-                        id = ContinuousDirectionId(1),
+                        modifier =
+                            Modifier
+                                .radialPosition(-90f)
+                                .radialScale(2f)
+                                .padding(8.dp),
+                        id = Id.ContinuousDirection(1),
                     )
                 },
             )
@@ -78,21 +78,23 @@ private fun SampleGamePad() {
                 primaryDial = {
                     ControlFaceButtons(
                         modifier = Modifier.fillMaxSize(),
-                        ids = listOf(6, 7, 8)
-                            .map { KeyId(it) }
-                            .toPersistentList(),
+                        ids =
+                            listOf(6, 7, 8)
+                                .map { Id.Key(it) }
+                                .toPersistentList(),
                     )
                 },
                 secondaryDials = {
-                    ControlButton(modifier = Modifier.radialPosition(120f), id = KeyId(3))
-                    ControlButton(modifier = Modifier.radialPosition(90f), id = KeyId(4))
-                    ControlButton(modifier = Modifier.radialPosition(60f), id = KeyId(5))
+                    ControlButton(modifier = Modifier.radialPosition(120f), id = Id.Key(3))
+                    ControlButton(modifier = Modifier.radialPosition(90f), id = Id.Key(4))
+                    ControlButton(modifier = Modifier.radialPosition(60f), id = Id.Key(5))
                     ControlAnalog(
-                        modifier = Modifier
-                            .radialPosition(-90f)
-                            .radialScale(2f)
-                            .padding(8.dp),
-                        id = ContinuousDirectionId(2),
+                        modifier =
+                            Modifier
+                                .radialPosition(-90f)
+                                .radialScale(2f)
+                                .padding(8.dp),
+                        id = Id.ContinuousDirection(2),
                     )
                 },
             )

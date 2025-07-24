@@ -22,10 +22,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
 import gg.padkit.handlers.Pointer
 import gg.padkit.handlers.PointerHandler
-import gg.padkit.ids.ContinuousDirectionId
-import gg.padkit.ids.ControlId
-import gg.padkit.ids.DiscreteDirectionId
-import gg.padkit.ids.KeyId
+import gg.padkit.ids.Id
 import gg.padkit.inputstate.InputState
 import gg.padkit.utils.relativeToCenter
 
@@ -130,15 +127,15 @@ class PadKitScope {
     }
 
     internal fun handleSimulatedInputEvents(
-        simulatedControlIds: Set<ControlId>,
+        simulatedControlIds: Set<Id>,
         inputState: InputState,
         simulatedInputState: InputState,
     ): InputState {
         return simulatedControlIds.fold(inputState) { state, id ->
             when (id) {
-                is KeyId -> state.setDigitalKey(id, simulatedInputState.getDigitalKey(id))
-                is ContinuousDirectionId -> state.setContinuousDirection(id, simulatedInputState.getContinuousDirection(id))
-                is DiscreteDirectionId -> state.setDiscreteDirection(id, simulatedInputState.getDiscreteDirection(id))
+                is Id.Key -> state.setDigitalKey(id, simulatedInputState.getDigitalKey(id))
+                is Id.ContinuousDirection -> state.setContinuousDirection(id, simulatedInputState.getContinuousDirection(id))
+                is Id.DiscreteDirection -> state.setDiscreteDirection(id, simulatedInputState.getDiscreteDirection(id))
             }
         }
     }

@@ -29,7 +29,7 @@ import kotlin.math.max
 import kotlin.math.sin
 import kotlin.math.sqrt
 
-object GeometryUtils {
+internal object GeometryUtils {
     fun computeSizeOfItemsOnCircumference(itemsCount: Int): Float {
         val angle = sin(Constants.PI / maxOf(itemsCount, 2))
         return (angle / (1 + angle))

@@ -17,11 +17,11 @@
 package gg.padkit.handlers
 
 import gg.padkit.anchors.Anchor
-import gg.padkit.ids.KeyId
+import gg.padkit.ids.Id
 import gg.padkit.inputstate.InputState
 import gg.padkit.inputstate.setDigitalKeyIfPressed
 
-internal class FaceButtonsPointerHandler(private val anchors: List<Anchor<KeyId>>) :
+internal class FaceButtonsPointerHandler(private val anchors: List<Anchor<Id.Key>>) :
     PointerHandler {
     private val keys =
         anchors
