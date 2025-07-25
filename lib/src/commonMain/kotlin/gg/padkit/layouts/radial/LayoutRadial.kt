@@ -41,6 +41,17 @@ import gg.padkit.utils.min
 import gg.padkit.utils.relativeToTopLeft
 import kotlin.math.roundToInt
 
+/**
+ * A layout composable that places a [primaryDial] in the center of the layout, and arranges
+ * [secondaryDials] in a circle around it.
+ *
+ * @param modifier The modifier to apply to this layout.
+ * @param primaryDialMaxSize The maximum size of the primary dial.
+ * @param secondaryDialsBaseRotationInDegrees The base rotation of the secondary dials, in degrees.
+ * @param secondaryDialsBaseScale The base scale of the secondary dials.
+ * @param primaryDial The composable to be placed in the center of the layout.
+ * @param secondaryDials The composables to be placed in a circle around the primary dial.
+ */
 @Composable
 fun PadKitScope.LayoutRadial(
     modifier: Modifier = Modifier,

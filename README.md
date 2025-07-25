@@ -44,7 +44,8 @@ private fun MyGamePad() {
 ### License
 
 ```
-Copyright 2024 Jam.gg
+Copyright (c) Jam.gg 2024.
+Copyright (c) Filippo Scognamiglio 2025.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

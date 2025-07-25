@@ -20,13 +20,29 @@ package gg.padkit.layouts.radial.secondarydials
 import androidx.compose.foundation.layout.LayoutScopeMarker
 import androidx.compose.ui.Modifier
 
+/**
+ * A scope for composables that can be placed in a circle around a central composable.
+ *
+ * @see gg.padkit.layouts.radial.LayoutRadial
+ */
 @LayoutScopeMarker
 class LayoutRadialSecondaryDialsScope {
+    /**
+     * Sets the position of the composable in the circle, in degrees.
+     *
+     * @param angleInDegrees The angle in degrees, where 0 is to the right, 90 is up, 180 is to
+     * the left, and 270 is down.
+     */
     fun Modifier.radialPosition(angleInDegrees: Float) =
         this.then(
             LayoutRadialSecondaryDialPositionModifier(angleInDegrees),
         )
 
+    /**
+     * Sets the scale of the composable relative to the other secondary dials.
+     *
+     * @param scale The scale of the composable.
+     */
     fun Modifier.radialScale(scale: Float) =
         this.then(
             LayoutRadialSecondaryDialScaleModifier(scale),
