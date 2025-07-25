@@ -34,8 +34,8 @@ kotlin {
             implementation(compose.material3)
             implementation(compose.materialIconsExtended)
 
-            implementation("org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.7")
-            implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.6.2")
+            implementation(libs.kotlinx.collections.immutable)
+            implementation(libs.kotlinx.datetime)
         }
     }
 }

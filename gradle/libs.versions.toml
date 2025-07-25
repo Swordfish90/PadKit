@@ -4,8 +4,14 @@ agp = "8.1.4"
 compose = "1.8.3"
 dokka = "1.9.0"
 ktlint = "11.6.1"
+ktlintVersion = "1.0.1"
 mavenPublish = "0.28.0"
 composePlugin = "1.8.2"
+kotlinxCollectionsImmutable = "0.3.7"
+kotlinxDatetime = "0.6.2"
+activityCompose = "1.7.2"
+appcompat = "1.6.1"
+coreKtx = "1.10.1"
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
@@ -23,3 +29,8 @@ maven-publish = { id = "com.vanniktech.maven.publish", version.ref = "mavenPubli
 
 [libraries]
 androidx-compose-ui = { group = "androidx.compose.ui", name = "ui", version.ref = "compose" }
+kotlinx-collections-immutable = { group = "org.jetbrains.kotlinx", name = "kotlinx-collections-immutable", version.ref = "kotlinxCollectionsImmutable" }
+kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "kotlinxDatetime" }
+activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
+appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }

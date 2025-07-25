@@ -29,12 +29,12 @@ kotlin {
             @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
             implementation(compose.components.resources)
             api(project(":lib"))
-            implementation("org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.7")
+            implementation(libs.kotlinx.collections.immutable)
         }
         androidMain.dependencies {
-            api("androidx.activity:activity-compose:1.7.2")
-            api("androidx.appcompat:appcompat:1.6.1")
-            api("androidx.core:core-ktx:1.10.1")
+            api(libs.activity.compose)
+            api(libs.appcompat)
+            api(libs.core.ktx)
         }
         jvmMain.dependencies {
             implementation(compose.desktop.common)
