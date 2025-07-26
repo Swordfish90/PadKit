@@ -1,6 +1,7 @@
 # PadKit
 
 PadKit is a Compose Multiplatform library that allows developers to create custom virtual gamepads for games and applications.
+This project is a continuation of the original [JamPadCompose](https://github.com/piepacker/JamPadCompose) by Jam.gg.
 
 ### Controls
 
@@ -9,6 +10,10 @@ The following controls are currently supported:
 * ControlButton
 * ControlCross
 * ControlFaceButtons
+
+### Layouts
+
+Controls can be arranged with any composable components, but PadKit also includes the `LayoutRadial` which places a primary dial in the center, and arranges secondary dials in a circle around it.
 
 ### Usage
 
@@ -22,22 +27,52 @@ Here's a how you can use PadKit to create a very simple gamepad layout.
 
 ```kotlin
 @Composable
-private fun MyGamePad() {
-   PadKit(
-      modifier = Modifier.fillMaxSize().aspectRatio(2f),
-      onInputStateUpdated = { }
-   ) {
-      Row(modifier = Modifier.fillMaxSize()) {
-         ControlCross(
-            modifier = Modifier.weight(1f),
-            id = 0
-         )
-         ControlFaceButtons(
-            modifier = Modifier.weight(1f),
-            ids = listOf(1, 2, 3)
-         )
-      }
-   }
+fun SampleGamePad() {
+    PadKit(
+        hapticFeedbackType = HapticFeedbackType.PRESS,
+        modifier = Modifier.fillMaxSize(),
+        onInputStateUpdated = {},
+    ) {
+        Row(
+            modifier = Modifier.fillMaxSize(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.Bottom,
+        ) {
+            LayoutRadial(
+                modifier = Modifier.padding(8.dp).weight(1f, fill = false),
+                primaryDial = {
+                    ControlCross(
+                        modifier = Modifier.fillMaxSize(),
+                        id = Id.DiscreteDirection(0),
+                    )
+                },
+                secondaryDials = {
+                    ControlButton(
+                        modifier = Modifier.radialPosition(-60f),
+                        id = Id.Key(0)
+                    )
+                },
+            )
+            LayoutRadial(
+                modifier = Modifier.padding(8.dp).weight(1f, fill = false),
+                primaryDial = {
+                    ControlFaceButtons(
+                        modifier = Modifier.fillMaxSize(),
+                        ids =
+                            listOf(1, 2)
+                                .map { Id.Key(it) }
+                                .toPersistentList(),
+                    )
+                },
+                secondaryDials = {
+                    ControlButton(
+                        modifier = Modifier.radialPosition(-120f),
+                        id = Id.Key(3)
+                    )
+                },
+            )
+        }
+    }
 }
 ```
 
