@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.maven.publish)
     alias(libs.plugins.dokka)
+    alias(libs.plugins.git.version)
 }
 
 kotlin {
@@ -63,10 +64,13 @@ android {
     }
 }
 
+val gitVersion: groovy.lang.Closure<String> by extra
+version = gitVersion()
+
 mavenPublishing {
     publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL, automaticRelease = true)
     signAllPublications()
-    coordinates("io.github.swordfish90", "padkit", "1.0.0-alpha1")
+    coordinates("io.github.swordfish90", "padkit", version.toString())
 
     pom {
         name.set(project.name)
