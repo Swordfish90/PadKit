@@ -25,7 +25,7 @@ internal class ButtonPointerHandler(private val buttonId: Id.Key) : PointerHandl
     override fun handle(
         pointers: List<Pointer>,
         inputState: InputState,
-        startDragGesture: Pointer?,
+        trackedIds: Set<Long>,
         data: Any?,
     ): Result {
         return Result(inputState.setDigitalKeyIfPressed(buttonId, pointers.isNotEmpty()))

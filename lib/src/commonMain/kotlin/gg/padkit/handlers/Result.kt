@@ -21,5 +21,5 @@ import gg.padkit.inputstate.InputState
 
 internal data class Result(
     val inputState: InputState,
-    val startDragGesture: Pointer? = null,
+    val trackedIds: Set<Long> = emptySet(),
 )

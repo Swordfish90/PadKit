@@ -55,6 +55,7 @@ import kotlinx.collections.immutable.persistentListOf
  * @param rotationInDegrees The rotation of the buttons in degrees.
  * @param ids The list of [Id.Key]s to associate with the buttons.
  * @param includeComposite Whether to include composite buttons, which are activated when multiple buttons are pressed at the same time.
+ * @param trackPointers Capture pointers so they are always forwarded to the control.
  * @param background The composable to use as the background of the control.
  * @param foreground The composable to use as the foreground of each button. It receives the [Id.Key] of the button and a [State] that is `true` when the button is being pressed.
  * @param foregroundComposite The composable to use as the foreground of each composite button. It receives a [State] that is `true` when the composite button is being pressed.
@@ -65,6 +66,7 @@ fun PadKitScope.ControlFaceButtons(
     rotationInDegrees: Float = 0f,
     ids: PersistentList<Id.Key>,
     includeComposite: Boolean = true,
+    trackPointers: Boolean = true,
     background: @Composable () -> Unit = { DefaultControlBackground() },
     foreground: @Composable (Id.Key, State<Boolean>) -> Unit = { _, pressed ->
         DefaultButtonForeground(pressedState = pressed)
@@ -88,6 +90,7 @@ fun PadKitScope.ControlFaceButtons(
         background = background,
         foreground = foreground,
         foregroundComposite = foregroundComposite,
+        trackPointers = trackPointers,
     )
 }
 
@@ -102,6 +105,7 @@ fun PadKitScope.ControlFaceButtons(
  * @param modifier The modifier to be applied to the control.
  * @param primaryAnchors The list of [Anchor]s that define the primary buttons.
  * @param compositeAnchors The list of [Anchor]s that define the composite buttons.
+ * @param trackPointers Capture pointers so they are always forwarded to the control.
  * @param background The composable to use as the background of the control.
  * @param foreground The composable to use as the foreground of each button. It receives the [Id.Key] of the button and a [State] that is `true` when the button is being pressed.
  * @param foregroundComposite The composable to use as the foreground of each composite button. It receives a [State] that is `true` when the composite button is being pressed.
@@ -111,6 +115,7 @@ fun PadKitScope.ControlFaceButtons(
     modifier: Modifier = Modifier,
     primaryAnchors: PersistentList<Anchor<Id.Key>>,
     compositeAnchors: PersistentList<Anchor<Id.Key>>,
+    trackPointers: Boolean = true,
     background: @Composable () -> Unit = { DefaultControlBackground() },
     foreground: @Composable (Id.Key, State<Boolean>) -> Unit = { _, pressed ->
         DefaultButtonForeground(pressedState = pressed)
@@ -120,7 +125,7 @@ fun PadKitScope.ControlFaceButtons(
     },
 ) {
     val anchors = primaryAnchors + compositeAnchors
-    val handler = remember(anchors) { FaceButtonsPointerHandler(anchors) }
+    val handler = remember(anchors, trackPointers) { FaceButtonsPointerHandler(anchors, trackPointers) }
     DisposableEffect(handler) {
         registerHandler(handler)
         onDispose {

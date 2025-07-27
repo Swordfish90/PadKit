@@ -36,34 +36,34 @@ internal class CrossPointerHandler(
     override fun handle(
         pointers: List<Pointer>,
         inputState: InputState,
-        startDragGesture: Pointer?,
+        trackedIds: Set<Long>,
         data: Any?,
     ): Result {
-        val currentDragGesture = pointers.firstOrNull { it.pointerId == startDragGesture?.pointerId }
+        val trackedPointer =
+            pointers
+                .firstOrNull { trackedIds.contains(it.pointerId) }
 
         return when {
             pointers.isEmpty() -> {
                 Result(
                     inputState.setDiscreteDirection(directionId, Offset.Unspecified),
-                    null,
+                    emptySet(),
                 )
             }
-
-            currentDragGesture != null -> {
+            trackedPointer != null -> {
                 Result(
                     inputState.setDiscreteDirection(
                         directionId,
-                        findCloserState(currentDragGesture),
+                        findCloserState(trackedPointer),
                     ),
-                    startDragGesture,
+                    setOf(trackedPointer.pointerId),
                 )
             }
-
             else -> {
                 val firstPointer = pointers.first()
                 Result(
                     inputState.setDiscreteDirection(directionId, findCloserState(firstPointer)),
-                    firstPointer,
+                    setOf(firstPointer.pointerId),
                 )
             }
         }

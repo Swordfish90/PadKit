@@ -23,7 +23,7 @@ internal interface PointerHandler {
     fun handle(
         pointers: List<Pointer>,
         inputState: InputState,
-        startDragGesture: Pointer?,
+        trackedIds: Set<Long>,
         data: Any?,
     ): Result
 }

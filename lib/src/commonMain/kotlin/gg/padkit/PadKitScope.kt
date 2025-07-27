@@ -34,7 +34,7 @@ import gg.padkit.utils.relativeToCenter
 class PadKitScope {
     private data class HandlerState(
         val pointerHandler: PointerHandler,
-        var startDragGesture: Pointer? = null,
+        var trackedIds: Set<Long>,
         var rect: Rect = Rect.Zero,
         val data: Any? = null,
     )
@@ -47,7 +47,7 @@ class PadKitScope {
         pointerHandler: PointerHandler,
         data: Any? = null,
     ) {
-        handlers[pointerHandler] = HandlerState(pointerHandler, null, Rect.Zero, data)
+        handlers[pointerHandler] = HandlerState(pointerHandler, emptySet(), Rect.Zero, data)
     }
 
     internal fun unregisterHandler(pointerHandler: PointerHandler) {
@@ -67,7 +67,7 @@ class PadKitScope {
 
     private fun getTrackedIds(): Set<Long> {
         return handlers.values
-            .mapNotNull { it.startDragGesture?.pointerId }
+            .flatMap { it.trackedIds }
             .toSet()
     }
 
@@ -79,7 +79,7 @@ class PadKitScope {
 
     private fun getHandlerTracking(pointerId: Long): PointerHandler? {
         return handlers.values
-            .firstOrNull { (_, dragGesture) -> dragGesture?.pointerId == pointerId }
+            .firstOrNull { it.trackedIds.contains(pointerId) }
             ?.pointerHandler
     }
 
@@ -110,19 +110,21 @@ class PadKitScope {
                                 it.position.relativeToCenter(handler.rect),
                             )
                         }
-                        .filter {
-                            it.position.getDistanceSquared() <= 1f || it.pointerId == handler.startDragGesture?.pointerId
+                        .filter { pointer ->
+                            val isClose = pointer.position.getDistanceSquared() <= 1f
+                            val isTracked = handler.trackedIds.contains(pointer.pointerId)
+                            isClose || isTracked
                         }
 
-                val (updatedState, startDragGesture) =
+                val (updatedState, updatedTrackedIndices) =
                     pointerHandler.handle(
                         relativePointers,
                         state,
-                        handler.startDragGesture,
+                        handler.trackedIds,
                         handler.data,
                     )
 
-                handler.startDragGesture = startDragGesture
+                handler.trackedIds = updatedTrackedIndices
                 updatedState
             }
     }
