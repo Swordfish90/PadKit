@@ -127,7 +127,7 @@ fun PadKit(
         scope.content()
     }
 
-    LaunchedEffect(scope.inputState) {
+    LaunchedEffect(scope.inputState, inputHapticGenerator, onInputStateUpdated, onInputEvents) {
         snapshotFlow { scope.inputState.value }
             .collect { inputState ->
                 onInputStateUpdated?.invoke(inputState)
