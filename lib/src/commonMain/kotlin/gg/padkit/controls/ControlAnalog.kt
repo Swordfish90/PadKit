@@ -67,7 +67,7 @@ fun PadKitScope.ControlAnalog(
 ) {
     val handler = remember { AnalogPointerHandler(id, analogPressId) }
     DisposableEffect(handler) {
-        registerHandler(handler, gg.padkit.handlers.AnalogPointerHandler.Data())
+        registerHandler(handler, AnalogPointerHandler.Data())
         onDispose {
             unregisterHandler(handler)
         }

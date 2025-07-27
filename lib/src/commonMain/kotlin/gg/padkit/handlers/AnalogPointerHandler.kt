@@ -34,46 +34,51 @@ internal class AnalogPointerHandler(
     data class Data(
         var lastDownEvent: Instant = Instant.DISTANT_PAST,
         var pressed: Boolean = false,
+        var startPosition: Offset = Offset.Unspecified,
     )
 
     override fun handle(
         pointers: List<Pointer>,
         inputState: InputState,
-        startDragGesture: Pointer?,
+        trackedIds: Set<Long>,
         data: Any?,
     ): Result {
         val analogData = data as Data
 
-        val currentDragGesture = pointers.firstOrNull { it.pointerId == startDragGesture?.pointerId }
+        val currentlyDraggedPointer =
+            pointers
+                .firstOrNull { trackedIds.contains(it.pointerId) }
 
         return when {
             pointers.isEmpty() -> {
                 analogData.pressed = false
+                analogData.startPosition = Offset.Unspecified
                 Result(
                     updateInputState(inputState, Offset.Unspecified, analogData.pressed),
-                    null,
+                    emptySet(),
                 )
             }
-            startDragGesture != null && currentDragGesture != null -> {
+            analogData.startPosition != Offset.Unspecified && currentlyDraggedPointer != null -> {
                 val deltaPosition =
                     Offset(
-                        currentDragGesture.position.x - startDragGesture.position.x,
-                        startDragGesture.position.y - currentDragGesture.position.y,
+                        currentlyDraggedPointer.position.x - analogData.startPosition.x,
+                        analogData.startPosition.y - currentlyDraggedPointer.position.y,
                     )
                 val offsetValue = deltaPosition.coerceIn(Offset(-1f, -1f), Offset(1f, 1f))
                 Result(
                     updateInputState(inputState, GeometryUtils.mapCircleToSquare(offsetValue), analogData.pressed),
-                    startDragGesture,
+                    trackedIds,
                 )
             }
             else -> {
+                val firstPointer = pointers.first()
                 val previousTime = analogData.lastDownEvent
                 val currentTime = Clock.System.now()
                 analogData.lastDownEvent = currentTime
                 analogData.pressed = currentTime - previousTime < Constants.DOUBLE_TAP_INTERVAL
+                analogData.startPosition = firstPointer.position
 
-                val firstPointer = pointers.first()
-                Result(updateInputState(inputState, Offset.Zero, analogData.pressed), firstPointer)
+                Result(updateInputState(inputState, Offset.Zero, analogData.pressed), setOf(firstPointer.pointerId))
             }
         }
     }

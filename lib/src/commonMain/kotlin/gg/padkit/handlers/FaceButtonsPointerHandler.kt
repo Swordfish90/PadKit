@@ -17,13 +17,18 @@
 
 package gg.padkit.handlers
 
+import androidx.compose.ui.geometry.Offset
 import gg.padkit.anchors.Anchor
 import gg.padkit.ids.Id
 import gg.padkit.inputstate.InputState
 import gg.padkit.inputstate.setDigitalKeyIfPressed
+import gg.padkit.utils.coerceIn
+import kotlinx.collections.immutable.PersistentSet
 
-internal class FaceButtonsPointerHandler(private val anchors: List<Anchor<Id.Key>>) :
-    PointerHandler {
+internal class FaceButtonsPointerHandler(
+    private val anchors: List<Anchor<Id.Key>>,
+    private val trackPointers: Boolean,
+) : PointerHandler {
     private val keys =
         anchors
             .flatMap { it.buttons }
@@ -32,16 +37,12 @@ internal class FaceButtonsPointerHandler(private val anchors: List<Anchor<Id.Key
     override fun handle(
         pointers: List<Pointer>,
         inputState: InputState,
-        startDragGesture: Pointer?,
+        trackedIds: Set<Long>,
         data: Any?,
     ): Result {
         val pressedKeys =
             pointers
-                .flatMap { pointer ->
-                    anchors
-                        .minBy { it.distance(pointer.position) }
-                        .buttons
-                }
+                .flatMap { pointer -> findClosestAnchor(pointer) }
                 .toSet()
 
         val finalState =
@@ -49,6 +50,24 @@ internal class FaceButtonsPointerHandler(private val anchors: List<Anchor<Id.Key
                 updatedState.setDigitalKeyIfPressed(key, key in pressedKeys)
             }
 
-        return Result(finalState)
+        val updatedTrackedIndices =
+            if (trackPointers) {
+                pointers
+                    .map { it.pointerId }
+                    .toSet()
+            } else {
+                emptySet()
+            }
+
+        return Result(finalState, updatedTrackedIndices)
+    }
+
+    private fun findClosestAnchor(pointer: Pointer): PersistentSet<Id.Key> {
+        return anchors
+            .minBy {
+                val coercedPosition = pointer.position.coerceIn(Offset(-1f, -1f), Offset(1f, 1f))
+                it.distance(coercedPosition)
+            }
+            .buttons
     }
 }
